@@ -357,7 +357,8 @@ a {
   padding-top: 2rem;
   margin-top: 2rem;
   border-top: solid 1px $hr-border-color;
-  background-color: rgb(230, 136, 74);
+  background-color: rgba(253, 199, 163, 0.575);
+  background-size: cover;
 
   @include large {
     font-size: 1rem;
