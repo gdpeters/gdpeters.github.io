@@ -1,6 +1,14 @@
 ## Bits & Pieces
 ### subtitle
 
+![GitHub Logo](/images/logo.png)
+Format: ![Alt Text](url).  
+
+> hgf
+> Xfff
+> Hgf
+> Fggh
+
 - ghgd
 - hi cxf
 
