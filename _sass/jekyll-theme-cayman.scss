@@ -63,14 +63,15 @@ a {
 
 .btn {
   display: inline-block;
-  margin-bottom: 1rem;
-  color: rgba(255, 255, 255, 0.7);
-  background-color: rgba(255, 255, 255, 0.08);
+  //margin-bottom: -1rem;
+  margin-top: 2.4rem;
+  color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.45);
   border-color: rgba(255, 255, 255, 0.2);
   border-style: solid;
   border-width: 1px;
   border-radius: 0.3rem;
-  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+  transition: color 0.2s, background-color .6s, border-color 0.2s;
 
   &:hover {
     color: rgba(255, 255, 255, 0.8);
@@ -373,9 +374,22 @@ a {
 
 .site-footer-owner {
   display: block;
-  font-weight: bold;
+ // font-weight: bold;
+ text-align: center;
 }
 
 .site-footer-credits {
   color: $blockquote-text-color;
+  display: block;
+  text-align: center;
+}
+
+.site-copyright {
+  display: block;
+  color: $blockquote-text-color;
+  text-align: center;
+}
+
+.site-project {
+  color: $body-link-color;
 }
