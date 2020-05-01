@@ -408,9 +408,9 @@ a {
   float: left;
 //display: inline-block;
   width: 50%;
-  border-color: red($color: #e42727);
-  border-style: solid;
-//  padding-bottom: 4rem;
+ // border-color: red($color: #e42727);
+ // border-style: solid;
+  padding-bottom: 4rem;
   
 //  margin-left: auto;
  // margin-right: auto;
@@ -423,6 +423,7 @@ a {
   clear: both;
   //border-color: red($color: #2753e4);
  // border-style: solid;
+ 
   
 }
 
