@@ -1,0 +1,2 @@
+The input.txt file should print "hello" to the console.
+It should also print the registers to output.txt.

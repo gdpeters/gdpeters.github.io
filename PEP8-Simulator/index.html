@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset=utf-8 />
+	<title>Lab 07 — Total and Renewable Capacity</title>
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+	<link rel='icon' href='https://newmapsplus.github.io/favicon.ico' type='image/x-icon' />
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/leaflet.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Cutive+Mono&display=swap" rel="stylesheet">
+
+	<style>
+		/* 
+			UKy Colors: 
+            #c7c9c8 light gray 
+            #63666a dark gray
+            #15397f dark blue
+            #009bda light blue
+            #0033a0 official blue
+        */
+		body {
+			margin: 0;
+			padding: 0;
+			background: #e3e3e6;
+			font-family: 'Open Sans', sans-serif;
+			font-weight: 300;
+			color: #3d3d3d;
+			font-size: 100%;
+			/* 16px is default browser size */
+
+		}
+
+		header,
+		section,
+		footer {
+			width: 80%;
+			margin: 10px auto;
+		}
+
+		h1 {
+			font-family: 'Cutive Mono', monospace;
+			font-weight: 900;
+			font-size: 2.8em;
+			font-style: bold;
+			/* The em unit. 3x the current size */
+			letter-spacing: .02em;
+			margin: 5px 0;
+			/* text-transform: uppercase; */
+		}
+
+		h2 {
+			font-family: 'Cutive Mono', monospace;
+			color: #63666a;
+			font-size: 2.2em;
+			letter-spacing: .06em;
+			font-style: bold;
+			margin: 5px 0;
+		}
+
+		h3 {
+			font-family: 'Cutive Mono', monospace;
+			font-size: 1.5em;
+			font-style: bold;
+			margin-bottom: 5px;
+		}
+
+		p {
+			font-size: 1.3em;
+			line-height: 1.8em;
+			margin-bottom: 5px;
+		}
+
+		a {
+			color: #004A8B;
+			font-weight: 400;
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+
+		ul {
+			padding: 0px 20px 4px 20px;
+			font-size: 1.1em;
+			line-height: 1.2em;
+			color: #63666a;
+		}
+
+		li {
+			margin: 10px 0
+		}
+
+		hr {
+			margin: 20px 0;
+			border: 0;
+			height: 1px;
+			background: #63666a;
+
+		}
+
+		.linkbox {
+			margin: 3px 0 20px 0;
+			display: block;
+			font-size: 0.9em;
+			font-weight: 300;
+			line-height: 1.3em;
+		}
+
+		#map {
+			width: 100%;
+			height: 450px;
+			margin: 20px auto;
+
+		}
+
+		.max-image-width {
+			width: 100%;
+		}
+
+		/* Use float property to make two-column layout */
+		.first-column {
+			float: left;
+			width: 49%;
+			padding-right: 2%;
+		}
+
+		.column {
+			float: left;
+			width: 49%;
+		}
+
+		/* Clear floats after the columns */
+		.row::after {
+			content: "";
+			display: block;
+			clear: both;
+		}
+
+		/* When browser is 900px wide or less */
+		@media screen and (max-width: 900px) {
+
+			.first-column,
+			.second-column {
+				width: 100%;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<header>
+		<h1>US Power Plants, Total and Renewable Capacity</h1>
+	</header>
+	<section>
+		<div class="row">
+			<div id="map"></div>
+
+			<div class="first-column">
+				<h2>Patterns of Renewable Energy Production</h2>
+				<p>
+					This map depicts hydropower, wind energy, and solar energy production throughout the United States.
+					All generating power plant points were obtained from the U.S. Energy Information Administration's
+					(eia's)
+					<a href="https://www.eia.gov/electricity/data/eia923/">Form EIA-923.</a>
+				</p>
+
+				<p>
+					Here they are sized by relative capacity, with a popup showing plant name, total generating capacity
+					in megawatts (MW), and fuel source generating capacity in MW.
+
+				</p>
+
+				<p>
+
+					The following descriptions were obtained from the National Renewable Energy Laboratory located in
+					Golden, Colorado.
+				</p>
+
+					<h3>Hydropower</h3>
+					<blockquote cite="https://www.nrel.gov/research/re-hydropower.html">
+						"Using a dam or diversion structure to alter the natural flow of a river or other body of water,
+						hydropower technologies convert the water's motion into electricity. Since hydropower costs less
+						than
+						most other energy sources, it is widely used across the United States. About 7% of all of
+						America's electricity
+						is generated from hydropower, making it the largest source of renewable energy. Because water
+						evaporates into
+						clouds and recycles back to Earth as precipitation, water power is able to produce electricity
+						in a sustainable way.
+						Hydropower is also becoming even more environmentally friendly as researchers work on new
+						technologies to reduce
+						adverse impacts on fish and their natural habitats."
+					</blockquote>
+
+					<h3>Solar Energy</h3>
+					<blockquote cite="https://www.nrel.gov/research/re-solar.html"> "More energy from the sun falls on
+						the earth in one hour than is used by everyone in the world in one year.
+						A variety of technologies convert sunlight to usable energy for buildings. The most commonly
+						used solar technologies
+						for homes and businesses are solar photovoltaics for electricity, passive solar design for space
+						heating and cooling,
+						and solar water heating. Businesses and industry use solar technologies to diversify their
+						energy sources, improve efficiency,
+						and save money. Energy developers and utilities use solar photovoltaic and concentrating solar
+						power technologies to
+						produce electricity on a massive scale to power cities and small towns." </blockquote>
+
+					<h3>Wind Energy</h3>
+					<blockquote cite="https://www.nrel.gov/research/re-wind.html"> "Wind turbines, like windmills, are
+						mounted on a tower to capture the most energy. At 100 feet (30 meters) or
+						more aboveground, they can take advantage of the faster and less turbulent wind. Turbines catch
+						the wind's energy with
+						their propeller-like blades. Usually, two or three blades are mounted on a shaft to form a
+						rotor.
+						A blade acts much like an airplane wing. When the wind blows, a pocket of low-pressure air forms
+						on the
+						downwind side of the blade. The low-pressure air pocket then pulls the blade toward it, causing
+						the rotor
+						to turn. This is called lift. The force of the lift is actually much stronger than the wind's
+						force against
+						the front side of the blade, which is called drag. The combination of lift and drag causes the
+						rotor to spin
+						like a propeller, and the turning shaft spins a generator to make electricity."</blockquote>
+			
+
+
+				<p><b>Social links</b></p>
+				<ul>
+					<li>See program projects on GitHub: <a href="https://github.com/newmapsplus">New Maps Plus</a></li>
+				</ul>
+
+
+			</div>
+			<div class="column">
+				<img class="max-image-width"
+					src="https://aemstatic-ww1.azureedge.net/content/pe/en/articles/2016/08/e-on-breaks-ground-on-illinois-wind-energy-project/_jcr_content/leftcolumn/article/headerimage.img.png/1472505716982.png"
+					title="Midwestern Turbines">
+				<div class="linkbox">
+					Wind Turbines
+				</div>
+			</div>
+		</div>
+	</section>
+	<footer>
+		<hr>
+
+		<a href="https://newmapsplus.github.io">
+			<img src="https://newmapsplus.github.io/assets/graphics/logo-2018-nmp-75px-h-gray.png"
+				alt="University of Kentucky Geography">
+		</a>
+
+		<a href="https://uky-gis.github.io">
+			<img src="https://newmapsplus.github.io/assets/graphics/logo-2018-geography-75px-h.png"
+				alt="University of Kentucky Geography">
+		</a>
+
+	</footer>
+
+	<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+	<script src="data/power-plants.js"></script> <!-- connect to external geoJson-->
+	<script>
+		// map options
+		var options = {
+			center: [38, -95],
+			zoom: 4
+		}
+
+		// create a Leaflet map in our division container with id of 'map'
+		var map = L.map('map', options);
+
+		// Leaflet providers base map URL
+		var basemap_source =
+			'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/dark_all/{z}/{x}/{y}.png'
+
+		// Leaflet providers attributes
+		var basemap_options = {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+			subdomains: 'abcd',
+			maxZoom: 19
+		};
+
+		// request some basemap tiles and add to the map
+		var tiles = L.tileLayer(basemap_source, basemap_options).addTo(map);
+
+		function getRadius(area) {
+			var radius = Math.sqrt(area / Math.PI);
+			return radius * .6;
+		}
+
+
+		var commonStyles = {
+			weight: 1,
+			stroke: 1,
+			fillOpacity: .8
+		}
+
+		// create layer for solar plants, filtering by fuel source
+		var solarLayer = L.geoJson(plants, {
+			pointToLayer: function (feature, latlng) {
+				return L.circleMarker(latlng, commonStyles);
+			},
+			filter: function (feature) {
+				if (feature.properties.fuel_source.Solar) {
+					return feature;
+				}
+			},
+			style: function (feature) {
+				return {
+					color: '#FFA500',
+					fillColor: '#FFA500',
+					radius: getRadius(feature.properties.fuel_source.Solar)
+				}
+			},
+
+			// create mouseover and mouseout interactivity. 
+			// On mouseover, turn circle red
+			// On mouseout, return to original color
+
+			onEachFeature: function (feature, layer) {
+				// // code here
+				// layer.on('mouseover', function () {
+				// 	layer.setStyle({
+				// 		fillColor: 'red'
+				// 	});
+				// });
+				// layer.on('mouseout', function () {
+				// 	layer.setStyle({
+				// 		fillColor: ''
+				// 	})
+				// });
+
+
+				// create an empty variable for fuel source so "for" loop can store values
+
+				var fuelSource = "";
+
+				// for loop to iterate through nested fuel source categories and capacity values
+				// concatenate and format string per lab reqs
+
+				for (var prop in layer.feature.properties.fuel_source) {
+					// code to iterate through fuel source
+					var fuelSourceCapacity = layer.feature.properties["fuel_source"][prop];
+					fuelSource += "<b>" + prop + "</b>" + ": " + fuelSourceCapacity + " MW<br>";
+					console.log(fuelSource);
+				}
+
+
+				// create and format tooltip popups
+
+				layer.bindPopup(`<h3>Plant name: ${layer.feature.properties.plant_name}</h3>
+					<b>Total capacity:</b> ${layer.feature.properties.capacity_mw} MW<br>
+					${fuelSource}`)
+
+			}
+
+		}).addTo(map); // end of solar layer code
+
+
+
+		// create layer for wind plants, filtering by fuel source
+
+		var windLayer = L.geoJson(plants, {
+			pointToLayer: function (feature, latlng) {
+				return L.circleMarker(latlng, commonStyles);
+			},
+			filter: function (feature) {
+				if (feature.properties.fuel_source.Wind) {
+					return feature;
+				}
+			},
+			style: function (feature) {
+				return {
+					color: '#a6cee3',
+					fillColor: '#a6cee3',
+					radius: getRadius(feature.properties.fuel_source.Wind)
+				}
+			},
+
+			// create mouseover and mouseout interactivity. 
+			// On mouseover, turn circle red
+			// On mouseout, return to original color
+
+			onEachFeature: function (feature, layer) {
+				// code here
+				// layer.on('mouseover', function () {
+				// 	layer.setStyle({
+				// 		fillColor: 'red'
+				// 	});
+
+				// });
+				// layer.on('mouseout', function () {
+				// 	layer.setStyle({
+				// 		fillColor: ''
+				// 	})
+				// });
+
+				// create an empty variable for fuel source so "for" loop can store values
+
+				var fuelSource = "";
+
+				// for loop to iterate through nested fuel source categories and capacity values
+				// concatenate and format string per lab reqs
+
+				for (var prop in layer.feature.properties.fuel_source) {
+					// code to iterate through fuel source
+					var fuelSourceCapacity = layer.feature.properties["fuel_source"][prop];
+					fuelSource += "<b>" + prop + "</b>" + ": " + fuelSourceCapacity + " MW<br>";
+					console.log(fuelSource);
+				}
+
+
+				// create and format tooltip popups
+
+				layer.bindPopup(`<h3>Plant name: ${layer.feature.properties.plant_name}</h3>
+					<b>Total capacity:</b> ${layer.feature.properties.capacity_mw} MW<br>
+					${fuelSource}`)
+
+			}
+
+
+		}).addTo(map); // end of wind layer code
+
+
+		// create layer for hydro plants, filtering by fuel source
+
+		var hydroLayer = L.geoJson(plants, {
+			pointToLayer: function (feature, latlng) {
+				return L.circleMarker(latlng, commonStyles);
+			},
+			filter: function (feature) {
+				if (feature.properties.fuel_source.Hydro) {
+					return feature;
+				}
+			},
+			style: function (feature) {
+				return {
+					color: '#00008b',
+					fillColor: '#00008b',
+					radius: getRadius(feature.properties.fuel_source.Hydro)
+				}
+			},
+
+
+			// create mouseover and mouseout interactivity. 
+			// On mouseover, turn circle red
+			// On mouseout, return to original color
+
+			onEachFeature: function (feature, layer) {
+				// code here
+				// layer.on('mouseover', function () {
+				// 	layer.setStyle({
+				// 		fillColor: 'red'
+				// 	});
+				// });
+				// layer.on('mouseout', function () {
+				// 	layer.setStyle({
+				// 		fillColor: ''
+				// 	})
+				// });
+
+				// create an empty variable for fuel source so "for" loop can store values
+
+				var fuelSource = "";
+
+				// for loop to iterate through nested fuel source categories and capacity values
+				// concatenate and format string per lab reqs
+
+				for (var prop in layer.feature.properties.fuel_source) {
+					// code to iterate through fuel source
+					var fuelSourceCapacity = layer.feature.properties["fuel_source"][prop];
+					fuelSource += "<b>" + prop + "</b>" + ": " + fuelSourceCapacity + " MW<br>";
+					console.log(fuelSource);
+				}
+
+
+				// create and format tooltip popups
+
+				layer.bindPopup(`<h3>Plant name: ${layer.feature.properties.plant_name}</h3>
+					<b>Total capacity:</b> ${layer.feature.properties.capacity_mw} MW<br>
+					${fuelSource}`)
+
+			}
+
+
+		}).addTo(map); // end of hydro layer code
+
+		// Let's experiment with combining similar process into a for loop
+		var myLayerGroups = [windLayer, hydroLayer, solarLayer]
+		// Access each layer group in the above array
+		for (layerGroup of myLayerGroups) {
+			// Let's check out this layer group
+			console.log(layerGroup)
+			// The eachLayer method access each point in the layer group.
+			// The GeoJson is a feature group, which extends a layer group.
+			// Features are combination of geometry and attributes.
+			// Layers are anything that can be added to the map, including markers.
+			layerGroup.eachLayer(function(layer){
+				// Check out the layer
+				console.log(layer)
+				layer.on('mouseover', function () {
+					layer.setStyle({
+						fillColor: 'red'
+					});
+					layer.openPopup()
+				});
+				layer.on('mouseout', function () {
+					layer.setStyle({
+						fillColor: ''
+					})
+					layer.closePopup()
+				});
+
+		});
+		}
+
+	</script>
+
+</body>
+
+</html>
