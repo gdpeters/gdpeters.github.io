@@ -37,86 +37,66 @@
 
     <main id="content" class="main-content" role="main">
       {{ content }}
-      <section id="projects" class="site-project">
-        <div class="container">
-          <div class="row">
-
-            <div class="column">
-              <div class="proj-image">
-              <a href="https://github.com/gdpeters/PEP8-Simulator"><img src="/images/acm-300x300.png" alt=""></a>
-              </div>
-              <div class="proj-text">
-                  <a target="_blank" href="https://github.com/gdpeters/PEP8-Simulator">Project Title</a>
-              </div>
+      <section id="projects" class="projects">
+        <div class="card">
+          <div class="card-img">
+            <a href="https://github.com/gdpeters/PEP8-Simulator"><img src="/images/world-300x300-grey.png" alt=""></a>
+            <a href="https://github.com/gdpeters/PEP8-Simulator"><img src="/images/world-300x300.png" class="img-color" alt=""></a>
+          </div>
+          <div class="card-info">
+            <div class="card-title">
+              <a target="_blank" href="https://github.com/gdpeters/PEP8-Simulator">Project Title</a>
             </div>
-            
-            <div class="column">
-              <div class="proj-image">
-                <a href="https://github.com/gdpeters/PEP8-Simulator"><img src="/images/ai-300x300.jpg" alt=""></a>
-              </div>
-              <div class="proj-text">
-                  <a target="_blank" href="https://github.com/gdpeters/PEP8-Simulator">Project Title</a>
-              </div>
+            <div class="card-text">
+              Description of project including brief summary, languages and tools used.
             </div>
-
-            <div class="column">
-              <div class="proj-image">
-                <a href="https://github.com/gdpeters/PEP8-Simulator"><img src="/images/binary-300x300.jpg" alt=""></a>
-              </div>
-              <div class="proj-text">
-                  <a target="_blank" href="https://github.com/gdpeters/PEP8-Simulator">Project Title</a>
-              </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img">
+            <a href="https://github.com/gdpeters/PEP8-Simulator"><img src="/images/world-300x300-grey.png" alt=""></a>
+            <a href="https://github.com/gdpeters/PEP8-Simulator"><img src="/images/world-300x300.png" class="img-color" alt=""></a>
+          </div>
+          <div class="card-info">
+            <div class="card-title">
+              <a target="_blank" href="https://github.com/gdpeters/PEP8-Simulator">Project Title</a>
             </div>
-
-            <div class="column">
-              <div class="proj-image">
-              <a href="https://github.com/gdpeters/PEP8-Simulator"><img src="/images/world-300x300.png" alt=""></a>
-              </div>
-              <div class="proj-text">
-                  <a target="_blank" href="https://github.com/gdpeters/PEP8-Simulator">Project Title</a>
-              </div>
+            <div class="card-text">
+              Description of project including brief summary, languages and tools used.
             </div>
-
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img">
+            <a href="https://github.com/gdpeters/PEP8-Simulator"><img src="/images/world-300x300-grey.png" alt=""></a>
+            <a href="https://github.com/gdpeters/PEP8-Simulator"><img src="/images/world-300x300.png" class="img-color" alt=""></a>
+          </div>
+          <div class="card-info">
+            <div class="card-title">
+              <a target="_blank" href="https://github.com/gdpeters/PEP8-Simulator">Project Title</a>
+            </div>
+            <div class="card-text">
+              Description of project including brief summary, languages and tools used.
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img">
+            <a href="https://github.com/gdpeters/PEP8-Simulator"><img src="/images/world-300x300-grey.png" alt=""></a>
+            <a href="https://github.com/gdpeters/PEP8-Simulator"><img src="/images/world-300x300.png" class="img-color" alt=""></a>
+          </div>
+          <div class="card-info">
+            <div class="card-title">
+              <a target="_blank" href="https://github.com/gdpeters/PEP8-Simulator">Project Title</a>
+            </div>
+            <div class="card-text">
+              Description of project including brief summary, languages and tools used.
+            </div>
           </div>
         </div>
       </section>
-      <!---
-      <div class="column">
-        <div class="content">
-          <img src="lights.jpg" alt="Lights" style="width:100%">
-          <h3>My Work</h3>
-          <p>Lorem ipsum..</p>
-        </div>
-      </div>
-      <div class="column">
-        <div class="content">
-          <img src="nature.jpg" alt="Nature" style="width:100%">
-          <h3>My Work</h3>
-          <p>Lorem ipsum..</p>
-        </div>
-      </div>
-      <div class="column">
-        <div class="content">
-          <img src="mountains.jpg" alt="Mountains" style="width:100%">
-          <h3>My Work</h3>
-          <p>Lorem ipsum..</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="content">
-      <img src="bear.jpg" alt="Bear" style="width:100%">
-      <h3>Some Other Work</h3>
-      <p>Lorem ipsum..</p>
-    </div>
-
-End chris site-->
 
       <footer class="site-footer">
-  <!---     <h3>Contact</h3>
-        <p>Genevieve Peters<br/>
-        <a href="gpete2@uis.edu">gpete2@uis.edu</a><br/>
-        <a href="https://github.com/gdpeters">github.com/gdpeters</a></p>--> 
         {% if site.github.is_project_page %}
           <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>
         {% endif %}
